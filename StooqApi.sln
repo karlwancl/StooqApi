@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StooqApi", "StooqApi\StooqApi.csproj", "{90460B9E-D470-4AD5-A080-ACA619930386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StooqApi.Tests", "StooqApi.Tests\StooqApi.Tests.csproj", "{9C67E5A9-B365-496E-A827-C910C78F25D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90460B9E-D470-4AD5-A080-ACA619930386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90460B9E-D470-4AD5-A080-ACA619930386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90460B9E-D470-4AD5-A080-ACA619930386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90460B9E-D470-4AD5-A080-ACA619930386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C67E5A9-B365-496E-A827-C910C78F25D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C67E5A9-B365-496E-A827-C910C78F25D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C67E5A9-B365-496E-A827-C910C78F25D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C67E5A9-B365-496E-A827-C910C78F25D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
