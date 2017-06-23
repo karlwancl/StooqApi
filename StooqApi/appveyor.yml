@@ -1,0 +1,12 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+before_build:
+- cmd: dotnet restore
+build:
+  verbosity: minimal
+after_build:
+- cmd: dotnet pack
+test_script:
+- cmd: dotnet test .\StooqApi.Tests\StooqApi.Tests.csproj
+artifacts:
+- path: StooqApi/bin/Debug/StooqApi.1.0.3.nupkg
