@@ -8,13 +8,14 @@
     <Description>A .NET wrapper for Stooq, based on .NET Standard 1.4</Description>
     <Copyright>Copyright (c) 2017-* Karl Wan</Copyright>
     <AssemblyTitle>StooqApi</AssemblyTitle>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionPrefix>1.0.3</VersionPrefix>
     <Authors>Karl Wan</Authors>
     <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>StooqApi</AssemblyName>
     <PackageId>StooqApi</PackageId>
     <PackageTags>Stooq;EOD;Stock</PackageTags>
     <PackageReleaseNotes>
+    [23/06/2017] Better handling on null startDate and null endDate. startDate now returns minDate if null, endDate now returns maxDate if null
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lppkarl/stooqapi</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/lppkarl/stooqapi/blob/master/LICENSE</PackageLicenseUrl>

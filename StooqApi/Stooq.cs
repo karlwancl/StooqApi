@@ -24,7 +24,9 @@ namespace StooqApi
         public static async Task<IList<Candle>> GetHistoricalAsync(string symbol, Period period = Period.Daily, DateTime? startTime = null, DateTime? endTime = null, SkipOption skipOption = SkipOption.None, bool ascending = false, CancellationToken token = default(CancellationToken))
         {
             var candles = new List<Candle>();
-            using (var s = await GetResponseStreamAsync(symbol, period, startTime, endTime, skipOption, token).ConfigureAwait(false))
+            var correctedStartTime = startTime ?? DateTime.MinValue;
+            var correctedEndTime = endTime ?? DateTime.MaxValue;
+            using (var s = await GetResponseStreamAsync(symbol, period, correctedStartTime, correctedEndTime, skipOption, token).ConfigureAwait(false))
             using (var sr = new StreamReader(s))
             using (var csvReader = new CsvReader(sr))
             {
