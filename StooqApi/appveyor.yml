@@ -9,4 +9,8 @@ after_build:
 test_script:
 - cmd: dotnet test .\StooqApi.Tests\StooqApi.Tests.csproj
 artifacts:
-- path: StooqApi/bin/Debug/StooqApi.1.0.3.nupkg
+- path: StooqApi/bin/Debug/StooqApi.*.nupkg
+deploy:
+- provider: NuGet
+  api_key:
+    secure: acSSgAlUNA/OCqX0TVICWNqcNcYgBJi01ynOZwXGhTNGVNtRQiv4FIJFsoYnuSgB
