@@ -14,6 +14,7 @@ namespace StooqApi
 {
     public static class Stooq
     {
+        static readonly DateTime DefaultStartTime = new DateTime(1500, 1, 1);
         const string StooqUrl = "https://stooq.com/q/d/l";
         const string SymbolTag = "s";
         const string PeriodTag = "i";
@@ -23,12 +24,19 @@ namespace StooqApi
 
         public static async Task<IList<Candle>> GetHistoricalAsync(string symbol, Period period = Period.Daily, DateTime? startTime = null, DateTime? endTime = null, SkipOption skipOption = SkipOption.None, bool ascending = false, CancellationToken token = default(CancellationToken))
         {
+            bool isError = true;
+            string text = string.Empty;
+
             var candles = new List<Candle>();
-            var correctedStartTime = startTime ?? DateTime.MinValue;
-            var correctedEndTime = endTime ?? DateTime.MaxValue;
-            using (var s = await GetResponseStreamAsync(symbol, period, correctedStartTime, correctedEndTime, skipOption, token).ConfigureAwait(false))
+            var correctedStartTime = (startTime == null && endTime != null) ? DefaultStartTime : startTime;
+            using (var s = await GetResponseStreamAsync(symbol, period, correctedStartTime, endTime, skipOption, token).ConfigureAwait(false))
             using (var sr = new StreamReader(s))
-            using (var csvReader = new CsvReader(sr))
+            {
+                text = await sr.ReadToEndAsync();
+            }
+
+            using (var tsr = new StringReader(text))
+            using (var csvReader = new CsvReader(tsr))
             {
                 while (csvReader.Read())
                 {
@@ -43,6 +51,7 @@ namespace StooqApi
                             Convert.ToDecimal(row[4]),
                             Convert.ToDecimal(row[5])
                         ));
+                        isError = false;
                     }
                     catch
                     {
@@ -50,6 +59,10 @@ namespace StooqApi
                     }
                 }
             }
+
+            if (isError)
+                throw new Exception(text);
+
             return ascending ? candles.OrderBy(c => c.DateTime).ToList() : candles.OrderByDescending(c => c.DateTime).ToList();
         }
 

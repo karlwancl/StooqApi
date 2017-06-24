@@ -11,7 +11,8 @@ namespace StooqApi.Tests
         [Fact]
         public void EodTest()
         {
-			var candle = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result.First();
+            var candles = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
+            var candle = candles.First();
             Assert.Equal(candle.DateTime, new DateTime(2017, 1, 3));
             Assert.Equal(candle.Open, 2251.57m);
             Assert.Equal(candle.High, 2263.88m);
@@ -31,5 +32,21 @@ namespace StooqApi.Tests
             });
         }
 
+        [Fact]
+        public void DateTimeTest()
+        {
+            var candle = Stooq.GetHistoricalAsync("^SPX", Period.Daily, ascending: true).Result;
+            Assert.Equal(candle.First().DateTime, new DateTime(1789, 5, 1));
+
+            var candle2 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
+            Assert.Equal(candle2.First().DateTime, new DateTime(2017, 1, 3));
+
+            var candle3 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), new DateTime(2017, 2, 3), ascending: true).Result;
+            Assert.Equal(candle3.First().DateTime, new DateTime(2017, 1, 3));
+            Assert.Equal(candle3.Last().DateTime, new DateTime(2017, 2, 3));
+
+            var candle4 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, endTime: new DateTime(2017, 2, 3), ascending: true).Result;
+            Assert.Equal(candle4.Last().DateTime, new DateTime(2017, 2, 3));
+        }
     }
 }
