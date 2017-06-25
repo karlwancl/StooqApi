@@ -37,7 +37,7 @@ namespace StooqApi.Tests
         public void PeriodTest()
         {
             const decimal open = 2251.57m;
-            Enum.GetValues(typeof(Period)).Cast<Period>().ToList().ForEach(p =>
+            Enum.GetValues(typeof(Period)).Cast<Period>().Except(new Period[] { Period.Yearly }).ToList().ForEach(p =>
             {
                 var candle = Stooq.GetHistoricalAsync("^SPX", p, new DateTime(2017, 1, 3), ascending: true).Result.First();
                 Assert.Equal(candle.Open, open);
