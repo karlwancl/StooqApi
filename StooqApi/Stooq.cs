@@ -14,8 +14,8 @@ namespace StooqApi
 {
     public static class Stooq
     {
-        static readonly DateTime DefaultStartTime = new DateTime(1500, 1, 1);
-        const string StooqUrl = "https://stooq.com/q/d/l";
+        static readonly DateTime DefaultStartTime = new DateTime(1000, 1, 1);
+        const string StooqUrl = "https://stooq.com/q/d/l/";
         const string SymbolTag = "s";
         const string PeriodTag = "i";
         const string StartTimeTag = "d1";
@@ -24,18 +24,21 @@ namespace StooqApi
 
         public static async Task<IList<Candle>> GetHistoricalAsync(string symbol, Period period = Period.Daily, DateTime? startTime = null, DateTime? endTime = null, SkipOption skipOption = SkipOption.None, bool ascending = false, CancellationToken token = default(CancellationToken))
         {
-            bool isError = true;
-            string text = string.Empty;
+			string text;
 
-            var candles = new List<Candle>();
-            var correctedStartTime = (startTime == null && endTime != null) ? DefaultStartTime : startTime;
-            using (var s = await GetResponseStreamAsync(symbol, period, correctedStartTime, endTime, skipOption, token).ConfigureAwait(false))
+			using (var s = await GetResponseStreamAsync(symbol, period, startTime, endTime, skipOption, token).ConfigureAwait(false))
             using (var sr = new StreamReader(s))
             {
-                text = await sr.ReadToEndAsync();
+				text = await sr.ReadToEndAsync();
+
+				const string validHeader = "Date,Open,High,Low,Close,Volume";
+                if (!text.StartsWith(validHeader, StringComparison.OrdinalIgnoreCase))
+                    throw new Exception(text);
             }
 
-            using (var tsr = new StringReader(text))
+			var candles = new List<Candle>();
+
+			using (var tsr = new StringReader(text))
             using (var csvReader = new CsvReader(tsr))
             {
                 while (csvReader.Read())
@@ -51,7 +54,6 @@ namespace StooqApi
                             Convert.ToDecimal(row[4]),
                             Convert.ToDecimal(row[5])
                         ));
-                        isError = false;
                     }
                     catch
                     {
@@ -60,18 +62,15 @@ namespace StooqApi
                 }
             }
 
-            if (isError)
-                throw new Exception(text);
-
-            return ascending ? candles.OrderBy(c => c.DateTime).ToList() : candles.OrderByDescending(c => c.DateTime).ToList();
+            return candles.OrderBy(c => c.DateTime, new DateTimeComparer(ascending)).ToList();
         }
 
         static async Task<Stream> GetResponseStreamAsync(string symbol, Period period = Period.Daily, DateTime? startTime = null, DateTime? endTime = null, SkipOption skipOption = SkipOption.None, CancellationToken token = default(CancellationToken))
             => await StooqUrl
-                .SetQueryParam(SymbolTag, symbol)
+                .SetQueryParam(SymbolTag, symbol, true)
+                .SetQueryParam(StartTimeTag, (startTime ?? DefaultStartTime).ToString("yyyyMMdd"))
+                .SetQueryParam(EndTimeTag, (endTime ?? DateTime.Now).ToString("yyyyMMdd"))
                 .SetQueryParam(PeriodTag, period.Name())
-                .SetQueryParam(StartTimeTag, startTime?.ToString("yyyyMMdd"))
-                .SetQueryParam(EndTimeTag, endTime?.ToString("yyyyMMdd"))
                 .SetQueryParam(SkipTag, skipOption == SkipOption.None ? null : Convert.ToString((int)skipOption, 2))
                 .SetQueryParamBySkipOption(skipOption)
                 .GetAsync(token)

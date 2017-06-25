@@ -15,7 +15,7 @@
     <PackageId>StooqApi</PackageId>
     <PackageTags>Stooq;Eod;Stock</PackageTags>
     <PackageReleaseNotes>
-    [24/06/2017] Fix incorrect dataset for unspecified range. Added exception for daily quota exceeds
+    [24/06/2017] Fix incorrect dataset for unspecified range. Added exception for daily quota exceeds. Fix mysql_fetch_error when querying ^-related historical data
     [23/06/2017] Better handling on null startDate and null endDate. startDate now returns minDate if null, endDate now returns maxDate if null
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lppkarl/stooqapi</PackageProjectUrl>
