@@ -2,11 +2,18 @@ using System;
 using Xunit;
 using System.Linq;
 using System.Threading;
+using System.Globalization;
 
 namespace StooqApi.Tests
 {
     public class UnitTest1
     {
+        public UnitTest1()
+        {
+            // Test culture info
+            CultureInfo.CurrentCulture = new CultureInfo("nl-nl");
+        }
+
         [Fact]
         public void IndexEodTest()
         {
