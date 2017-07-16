@@ -5,6 +5,9 @@
 
 A .NET wrapper for Stooq, based on .NET Standard 1.4
 
+## Note
+Query of older historical price is not working properly because stooq is returning empty csv when an older start date is used. Stooq's query system is bugged.
+
 ## Feature
 * Get historical data from Stooq.com
 

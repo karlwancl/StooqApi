@@ -32,9 +32,9 @@ namespace StooqApi
             {
 				text = await sr.ReadToEndAsync();
 
-				const string validHeader = "Date,Open,High,Low,Close,Volume";
+				const string validHeader = "Date";
                 if (!text.StartsWith(validHeader, StringComparison.OrdinalIgnoreCase))
-                    throw new Exception(text);
+                    throw new Exception(string.IsNullOrEmpty(text) ? "Source csv does not contain any text" : text);
             }
 
 			var candles = new List<Candle>();

@@ -8,16 +8,17 @@
     <Description>A .NET wrapper for Stooq, based on .NET Standard 1.4</Description>
     <Copyright>Copyright (c) 2017 Karl Wan</Copyright>
     <AssemblyTitle>StooqApi</AssemblyTitle>
-    <VersionPrefix>1.0.5</VersionPrefix>
+    <VersionPrefix>1.0.6</VersionPrefix>
     <Authors>Karl Wan</Authors>
     <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>StooqApi</AssemblyName>
     <PackageId>StooqApi</PackageId>
     <PackageTags>Stooq;Eod;Stock</PackageTags>
     <PackageReleaseNotes>
-	[06/07/2017] Fix parsing with different culture
-    [24/06/2017] Fix incorrect dataset for unspecified range. Added exception for daily quota exceeds. Fix mysql_fetch_error when querying ^-related historical data
-    [23/06/2017] Better handling on null startDate and null endDate. startDate now returns minDate if null, endDate now returns maxDate if null
+[16/07/2017] Fix parsing csv, query of older historical prices is not working properly because stooq is returning empty csv when an older start date is used
+[06/07/2017] Fix parsing with different culture
+[24/06/2017] Fix incorrect dataset for unspecified range. Added exception for daily quota exceeds. Fix mysql_fetch_error when querying ^-related historical data
+[23/06/2017] Better handling on null startDate and null endDate. startDate now returns minDate if null, endDate now returns maxDate if null
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lppkarl/stooqapi</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/lppkarl/stooqapi/blob/master/LICENSE</PackageLicenseUrl>
