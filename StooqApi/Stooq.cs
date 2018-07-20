@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Flurl;
 using Flurl.Http;
 
@@ -39,24 +40,33 @@ namespace StooqApi
 
 			var candles = new List<Candle>();
 
+            bool isBypassedHeader = false;
 			using (var tsr = new StringReader(text))
-            using (var csvReader = new CsvReader(tsr))
+            using (var csvReader = new CsvReader(tsr, new Configuration { HasHeaderRecord = true }))
             {
                 while (csvReader.Read())
                 {
-                    string[] row = csvReader.CurrentRecord;
+                    // CsvHelper's HasHeaderRecord not working v6.0.3
+                    if (!isBypassedHeader)
+                    {
+                        isBypassedHeader = true;
+                        continue;
+                    }
+
+                    string[] row = csvReader.Context.Record;
                     try
                     {
+                        decimal volume = (row.Count() <= 6 || string.IsNullOrWhiteSpace(row[5])) ? 0 : Convert.ToDecimal(row[5], CultureInfo.InvariantCulture);
                         candles.Add(new Candle(
                             Convert.ToDateTime(row[0], CultureInfo.InvariantCulture),
                             Convert.ToDecimal(row[1], CultureInfo.InvariantCulture),
                             Convert.ToDecimal(row[2], CultureInfo.InvariantCulture),
                             Convert.ToDecimal(row[3], CultureInfo.InvariantCulture),
                             Convert.ToDecimal(row[4], CultureInfo.InvariantCulture),
-                            Convert.ToDecimal(row[5], CultureInfo.InvariantCulture)
+                            volume
                         ));
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         // Intentionally blank, skip invalid records
                     }

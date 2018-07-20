@@ -11,7 +11,7 @@ namespace StooqApi.Tests
         public UnitTest1()
         {
             // Test culture info
-            CultureInfo.CurrentCulture = new CultureInfo("nl-nl");
+            //CultureInfo.CurrentCulture = new CultureInfo("nl-nl");
         }
 
         [Fact]
@@ -20,11 +20,11 @@ namespace StooqApi.Tests
             var candles = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
             var candle = candles.First();
             Assert.Equal(candle.DateTime, new DateTime(2017, 1, 3));
-            Assert.Equal(candle.Open, 2251.57m);
-            Assert.Equal(candle.High, 2263.88m);
-            Assert.Equal(candle.Low, 2245.13m);
-            Assert.Equal(candle.Close, 2257.83m);
-            Assert.Equal(candle.Volume, 644_640_832);
+            Assert.Equal(2251.57m, candle.Open);
+            Assert.Equal(2263.88m, candle.High);
+            Assert.Equal(2245.13m, candle.Low);
+            Assert.Equal(2257.83m, candle.Close);
+            Assert.Equal(644_640_832, candle.Volume);
 		}
 
         [Fact]
@@ -33,11 +33,11 @@ namespace StooqApi.Tests
 			var candles = Stooq.GetHistoricalAsync("aapl.us", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
 			var candle = candles.First();
 			Assert.Equal(candle.DateTime, new DateTime(2017, 1, 3));
-			Assert.Equal(candle.Open, 114.83m);
-			Assert.Equal(candle.High, 115.35m);
-			Assert.Equal(candle.Low, 113.79m);
-			Assert.Equal(candle.Close, 115.17m);
-			Assert.Equal(candle.Volume, 27_975_430);
+			Assert.Equal(113.07m, candle.Open);
+			Assert.Equal(113.59m, candle.High);
+			Assert.Equal(112.04m, candle.Low);
+			Assert.Equal(113.41m, candle.Close);
+			Assert.Equal(28_410_302, candle.Volume);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace StooqApi.Tests
         public void DateTimeTest()
         {
             // Bug: Stooq returns empty csv if start date < the particular date, no candle can be retrieved in this case
-   //         var candle = Stooq.GetHistoricalAsync("^SPX", Period.Daily, ascending: true).Result;
-   //         Assert.Equal(candle.First().DateTime, new DateTime(1789, 5, 1));
-			//Thread.Sleep(1000);
+            var candle = Stooq.GetHistoricalAsync("^SPX", Period.Daily, ascending: true).Result;
+            Assert.Equal(candle.First().DateTime, new DateTime(1789, 5, 1));
+            Thread.Sleep(1000);
 
             var candle2 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
             Assert.Equal(candle2.First().DateTime, new DateTime(2017, 1, 3));
@@ -70,8 +70,8 @@ namespace StooqApi.Tests
 			Thread.Sleep(1000);
 
             // Bug: Stooq returns empty csv if start date < the particular date, no candle can be retrieved in this case
-            //var candle4 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, endTime: new DateTime(2017, 2, 3), ascending: true).Result;
-            //Assert.Equal(candle4.Last().DateTime, new DateTime(2017, 2, 3));
+            var candle4 = Stooq.GetHistoricalAsync("^SPX", Period.Daily, endTime: new DateTime(2017, 2, 3), ascending: true).Result;
+            Assert.Equal(candle4.Last().DateTime, new DateTime(2017, 2, 3));
         }
     }
 }

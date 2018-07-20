@@ -3,10 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/StooqApi.svg)](https://www.nuget.org/packages/StooqApi/)
 [![license](https://img.shields.io/github/license/lppkarl/StooqApi.svg)](https://github.com/lppkarl/StooqApi/blob/master/LICENSE)
 
-A .NET wrapper for Stooq, based on .NET Standard 1.4
-
-## Note
-Query of older historical price is not working properly because stooq is returning empty csv when an older start date is used. Stooq's query system is bugged.
+A .NET wrapper for Stooq, based on .NET Standard 2.0
 
 ## Feature
 * Get historical data from Stooq.com
