@@ -56,7 +56,7 @@ namespace StooqApi
                     string[] row = csvReader.Context.Record;
                     try
                     {
-                        decimal volume = (row.Count() <= 6 || string.IsNullOrWhiteSpace(row[5])) ? 0 : Convert.ToDecimal(row[5], CultureInfo.InvariantCulture);
+                        decimal volume = (row.Count() <= 5 || string.IsNullOrWhiteSpace(row[5])) ? 0 : Convert.ToDecimal(row[5], CultureInfo.InvariantCulture);
                         candles.Add(new Candle(
                             Convert.ToDateTime(row[0], CultureInfo.InvariantCulture),
                             Convert.ToDecimal(row[1], CultureInfo.InvariantCulture),
