@@ -12,13 +12,13 @@
     <AssemblyName>StooqApi</AssemblyName>
     <PackageId>StooqApi</PackageId>
     <PackageTags>Stooq;Eod;Stock</PackageTags>
-    <PackageReleaseNotes>
+    <PackageReleaseNotes>[16/9/2018] Upgrade CsvHelper from 6.0.3 to 7.1.1
 [21/07/2018] Update to .NET Standard 2.0, Update csvHelper to v6.0.3
 [16/07/2017] Fix parsing csv, query of older historical prices is not working properly because stooq is returning empty csv when an older start date is used
 [06/07/2017] Fix parsing with different culture
 [24/06/2017] Fix incorrect dataset for unspecified range. Added exception for daily quota exceeds. Fix mysql_fetch_error when querying ^-related historical data
 [23/06/2017] Better handling on null startDate and null endDate. startDate now returns minDate if null, endDate now returns maxDate if null
-    </PackageReleaseNotes>
+</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lppkarl/stooqapi</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/lppkarl/stooqapi/blob/master/LICENSE</PackageLicenseUrl>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -30,11 +30,12 @@
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="7.1.1" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="CsvHelper" Version="6.0.3" />
     <PackageReference Include="Flurl.Http" Version="2.3.2" />
     <PackageReference Include="Flurl" Version="2.7.1" />
   </ItemGroup>

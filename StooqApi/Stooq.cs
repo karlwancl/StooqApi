@@ -40,18 +40,18 @@ namespace StooqApi
 
 			var candles = new List<Candle>();
 
-            bool isBypassedHeader = false;
+            //bool isBypassedHeader = false;
 			using (var tsr = new StringReader(text))
             using (var csvReader = new CsvReader(tsr, new Configuration { HasHeaderRecord = true }))
             {
                 while (csvReader.Read())
                 {
                     // CsvHelper's HasHeaderRecord not working v6.0.3
-                    if (!isBypassedHeader)
-                    {
-                        isBypassedHeader = true;
-                        continue;
-                    }
+                    //if (!isBypassedHeader)
+                    //{
+                    //    isBypassedHeader = true;
+                    //    continue;
+                    //}
 
                     string[] row = csvReader.Context.Record;
                     try
