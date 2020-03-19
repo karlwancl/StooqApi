@@ -23,6 +23,7 @@ namespace StooqApi
         const string StartTimeTag = "d1";
         const string EndTimeTag = "d2";
         const string SkipTag = "o";
+        public static CultureInfo Culture = CultureInfo.InvariantCulture;
 
         public static async Task<IList<Candle>> GetHistoricalAsync(string symbol, Period period = Period.Daily, DateTime? startTime = null, DateTime? endTime = null, SkipOption skipOption = SkipOption.None, bool ascending = false, CancellationToken token = default(CancellationToken))
         {
@@ -42,7 +43,7 @@ namespace StooqApi
 
             //bool isBypassedHeader = false;
 			using (var tsr = new StringReader(text))
-            using (var csvReader = new CsvReader(tsr, new Configuration { HasHeaderRecord = true }))
+            using (var csvReader = new CsvReader(tsr, new CsvConfiguration(Culture) { HasHeaderRecord = true }))
             {
                 while (csvReader.Read())
                 {

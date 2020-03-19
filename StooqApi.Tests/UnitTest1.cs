@@ -33,11 +33,11 @@ namespace StooqApi.Tests
 			var candles = Stooq.GetHistoricalAsync("aapl.us", Period.Daily, new DateTime(2017, 1, 3), ascending: true).Result;
 			var candle = candles.First();
 			Assert.Equal(candle.DateTime, new DateTime(2017, 1, 3));
-			Assert.Equal(112.67m, candle.Open);
-			Assert.Equal(113.19m, candle.High);
-			Assert.Equal(111.65m, candle.Low);
-			Assert.Equal(113.01m, candle.Close);
-			Assert.Equal(28_509_939, candle.Volume);
+			Assert.Equal(110.36m, candle.Open);
+			Assert.Equal(110.88m, candle.High);
+			Assert.Equal(109.35m, candle.Low);
+			Assert.Equal(110.7m, candle.Close);
+			Assert.Equal(29_108_191, candle.Volume);
         }
 
         [Fact]
